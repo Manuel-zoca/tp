@@ -7,75 +7,29 @@ exports.handlePagamento = async (sock, msg) => {
             return sock.sendMessage(from, { text: '❌ Este comando só funciona em grupos!' });
         }
 
-        // Define as mensagens de pagamento para cada grupo
-        const mensagensPorGrupo = {
-            "120363417514741662@g.us": `
+        // Mensagem padrão de pagamento
+        const mensagem = `
 📱Formas de Pagamento Atualizadas📱 💳
- 
 
-1. M-PESA 📱
-   - Número: 848619531
-   - DINIS MARTA
-   
-2. E-MOLA 💸
-   - Número: 872960710
-   - MANUEL ZOCA
+1. M-PESA 📱  
+   - Número: 848619531  
+   - DINIS MARTA  
 
-3.  BIM
- Conta nr : 1059773792
-- CHONGO MANUEL
+2. E-MOLA 💸  
+   - Número: 872960710  
+   - MANUEL ZOCA  
 
+3. BIM 🏦  
+   - Conta nº: 1059773792  
+   - CHONGO MANUEL  
 
 Após efetuar o pagamento, por favor, envie o comprovante da transferência juntamente com seu contato.
-            `.trim(),
-            "120363252308434038@g.us": `
-📱Formas de Pagamento Atualizadas📱 💳
- 
+        `.trim();
 
-1. M-PESA 📱
-   - Número: 848619531
-   - DINIS MARTA
-   
-2. E-MOLA 💸
-   - Número: 872960710
-   - MANUEL ZOCA
-
-3.  BIM
- Conta nr : 1059773792
-- CHONGO MANUEL
-
-
-Após efetuar o pagamento, por favor, envie o comprovante da transferência juntamente com seu contato.`.trim(),
-            "120363401150279870@g.us": `
-📱Formas de Pagamento Atualizadas📱 💳
- 
-
-1. M-PESA 📱
-   - Número: 848619531
-   - DINIS MARTA
-   
-2. E-MOLA 💸
-   - Número: 872960710
-   - MANUEL ZOCA
-
-3.  BIM
- Conta nr : 1059773792
-- CHONGO MANUEL
-
-
-Após efetuar o pagamento, por favor, envie o comprovante da transferência juntamente com seu contato.`
-        };
-
-        // Verifica se o grupo tem uma mensagem configurada
-        const mensagem = mensagensPorGrupo[from];
-        if (!mensagem) {
-            return sock.sendMessage(from, { text: '❌ Este grupo não está configurado para exibir formas de pagamento.' });
-        }
-
-        // Envia a mensagem de pagamento específica para o grupo
+        // Envia a mensagem de pagamento
         await sock.sendMessage(from, { text: mensagem });
 
-        // Aguarda 2 segundos antes de enviar a próxima mensagem
+        // Aguarda 2 segundos antes de finalizar
         await new Promise(resolve => setTimeout(resolve, 2000));
 
     } catch (error) {
